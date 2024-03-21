@@ -65,6 +65,50 @@ exports.option = {
                   }
                }
             }
+         },
+         "post": {
+            "tags": ["Users"],
+            "description": "Create new user",
+            "requestBody": {
+               "description":"User schema to insert",
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "username": {"type":"string"},
+                           "password": {"type":"string"},
+                           "name": {"type":"string"},
+                           "surname":{"type":"string"},
+                           "email":{"type":"string"},
+                           "address": {
+                              "type":"object",
+                              "properties":{
+                                 "area":{"type":"string"},
+                                 "road":{"type":"string"}
+                              }
+                           },
+                           "phone": {
+                              "type":"array",
+                              "items": {
+                                 "type": "object",
+                                 "properties": {
+                                    "type":{"type":"string"},
+                                    "number":{"type":"number"}
+                                 }
+                              }
+                           }
+                        },
+                        "required": ["username", "password",]
+                     }
+                  }
+               }
+            },
+            "response": {
+               "200": {
+                  "description": "New user inserted"
+               }
+            }
          }
       },
       "/api/users/{username}": {
@@ -86,6 +130,78 @@ exports.option = {
                   "schema": {
                         "$ref": "#/components/schemas/User"
                   }
+               }
+            }
+         },
+         "patch": {
+            "tags":["Users"],
+            "description":"Update a user",
+            "parameters": [
+               {
+                  "name": "username",
+                  "in": "path",
+                  "required":"true",
+                  "description":"Username of user to update",
+                  "type":"string"
+               }
+            ],
+            "requestBody": {
+               "description": "User that we update",
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "username":{"type":"string"},
+                           "name":{"type":"string"},
+                           "surname":{"type":"string"},
+                           "email":{"type":"string"},
+                           "address": {
+                              "type":"object",
+                              "properties": {
+                                 "area":{"type":"string"},
+                                 "road":{"type":"string"}
+                              }
+                           },
+                           "phone": {
+                              "type":"array",
+                              "items": {
+                                 "type":"object",
+                                 "properties": {
+                                    "type": {"type":"string"},
+                                    "number": {"type":"number"}
+                                 }
+                              }
+                           }
+                        },
+                        "required":["email"]
+                     }
+                  }
+               }
+            },
+            "responses":{
+               "200":{
+                  "description": "User was updated",
+                  "schema": {
+                     "$ref": "#/components/schemas/User"
+                  }
+               }
+            }
+         },
+         "delete": {
+            "tags":["Users"],
+            "description": "Delete a user",
+            "parameters": [
+               {
+                  "name": "username",
+                  "in": "path",
+                  "description": "Username of user to delete",
+                  "type":"string"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "user was deleted"
                }
             }
          }
