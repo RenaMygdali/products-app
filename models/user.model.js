@@ -32,7 +32,7 @@ let userSchema = new Schema({
    password: {
       type: String,
       required: [true, 'Password is required'],
-      minLength: [8, 'Password must have more than 8 characters'],
+      minLength: [6, 'Password must have more than 6 characters'],
       maxLength: [20, 'Password must have less than 20 characters']
    },
    name: { type: String },
